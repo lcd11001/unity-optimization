@@ -19,8 +19,8 @@ public class UpdateWorld : MonoBehaviour
         {
             for (int x = 0; x < texture.width; x++)
             {
-                if (Mathf.PerlinNoise(x/20.0f,y/20.0f) * 100 < 40)
-                  texture.SetPixel(x, y, Color.yellow);
+                if (Mathf.PerlinNoise(x / 20.0f, y / 20.0f) * 100 < 40)
+                    texture.SetPixel(x, y, Color.yellow);
             }
         }
 
@@ -93,7 +93,7 @@ public class UpdateWorld : MonoBehaviour
     void Update()
     {
         //record start of mouse drawing (or erasing) to get the first position the mouse touches down
-        if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) )
+        if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
         {
             RaycastHit ray;
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out ray))
@@ -131,7 +131,7 @@ public class UpdateWorld : MonoBehaviour
             }
         }
 
-        SimulateWorld(texture);
+        // SimulateWorld(texture);
     }
 
     //Draw a pixel by pixel line between two points
@@ -158,6 +158,15 @@ public class UpdateWorld : MonoBehaviour
         for (int i = 0; i <= longest; i++)
         {
             texture.SetPixel(x, y, color);
+
+            for (int xx = x - 1; xx < x + 2; xx++)
+            {
+                for (int yy = y - 1; yy < y + 2; yy++)
+                {
+                    SimulateWordAtPosition(texture, xx, yy);
+                }
+            }
+
             numerator += shortest;
             if (!(numerator < longest))
             {
